@@ -3,10 +3,11 @@
 [![Downloads](https://img.shields.io/nuget/dt/Umbraco.Community.uRestore?color=cc9900)](https://www.nuget.org/packages/Umbraco.Community.uRestore/)
 [![NuGet](https://img.shields.io/nuget/vpre/Umbraco.Community.uRestore?color=0273B3)](https://www.nuget.org/packages/Umbraco.Community.uRestore)
 [![GitHub license](https://img.shields.io/github/license/Jordan-Smith-Dev/uRestore?color=8AB803)](https://github.com/Jordan-Smith-Dev/uRestore/blob/main/LICENSE)
+[![Umbraco Marketplace](https://img.shields.io/badge/Umbraco-Marketplace-%233544B1?logo=umbraco)](https://marketplace.umbraco.com/package/umbraco.community.urestore)
 
 Selectively restore individual property values from any saved content version — directly inside the Umbraco backoffice.
 
-uRestore adds a **Property Restore** tab to every content node workspace. Editors can browse version history, compare any saved version against the current draft property-by-property, and choose exactly which values to restore — without affecting the properties they want to keep.
+uRestore adds a **Property Restore** tab to every content node workspace. Editors can browse the full version history, compare any saved version against the current draft property-by-property, and choose exactly which values to restore — without affecting the properties they want to keep.
 
 ![uRestore version history panel showing saved versions with status pills](https://raw.githubusercontent.com/Jordan-Smith-Dev/uRestore/main/docs/uRestore_preview-001.png)
 
@@ -20,6 +21,13 @@ uRestore adds a **Property Restore** tab to every content node workspace. Editor
 - **Non-destructive** — restored values are saved as a new draft and never auto-published
 - **Save & Publish shortcut** — optionally publish immediately after restoring from the confirmation dialog
 - **Native UI** — built with Umbraco UI Library components so it looks and feels like part of the backoffice
+
+## What it doesn't do
+
+- It does not replace the built-in rollback feature on the Info tab — it complements it
+- It does not publish restored content automatically; editors retain full control
+- It does not handle block-level partial restores within complex property editors (e.g. Block List, Block Grid) — the entire property value is restored as a whole
+- It does not support restoring media or member properties
 
 ## Requirements
 
@@ -37,10 +45,12 @@ No configuration is required. After installing the package and restarting your s
 ## Usage
 
 1. Open any content node in the backoffice
-2. Click the **Property Restore** tab
-3. Click **Compare** on any version to see a property-by-property diff
-4. Select the properties you want to restore and click **Restore selected**
-5. Choose to save as draft or save and publish from the confirmation dialog
+2. Click the **Property Restore** tab (alongside Content, Info, etc.)
+3. The tab lists all saved versions — click **Compare** on any version
+4. Review the property-by-property diff; changed properties are pre-selected
+5. Deselect any properties you want to keep at their current value
+6. Click **Restore selected** — a confirmation dialog appears with Save as draft or Save & Publish options
+7. Review and publish the draft as normal when ready
 
 ![uRestore property comparison view with inline diff highlighting and selective restore](https://raw.githubusercontent.com/Jordan-Smith-Dev/uRestore/main/docs/uRestore_preview-002.png)
 
