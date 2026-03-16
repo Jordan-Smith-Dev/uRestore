@@ -1,0 +1,161 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>@Model.Name</title>
+
+  <!-- BLOCK 1: VALID — WebPage with all recommended fields -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "WebPage",
+    "name": "@Model.Name",
+    "url": "@Model.Url()"
+  }
+  </script>
+
+  <!-- BLOCK 2: VALID — Organization with all recommended fields -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "Organization",
+    "name": "Acme Corporation",
+    "url": "https://www.example.com",
+    "logo": "https://www.example.com/logo.png"
+  }
+  </script>
+
+  <!-- BLOCK 3: VALID — Article with all recommended fields -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "Article",
+    "headline": "Test Article Headline",
+    "datePublished": "2024-01-15",
+    "author": {
+      "@@type": "Person",
+      "name": "Jane Doe"
+    },
+    "image": "https://www.example.com/article-image.jpg"
+  }
+  </script>
+
+  <!-- BLOCK 4: VALID — FAQPage with mainEntity -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@@type": "Question",
+        "name": "What is schema.org?",
+        "acceptedAnswer": {
+          "@@type": "Answer",
+          "text": "Schema.org is a collaborative, community activity with a mission to create, maintain, and promote schemas for structured data."
+        }
+      },
+      {
+        "@@type": "Question",
+        "name": "Why use structured data?",
+        "acceptedAnswer": {
+          "@@type": "Answer",
+          "text": "Structured data helps search engines understand your content and can enable rich results in search."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- BLOCK 5: VALID — BreadcrumbList with itemListElement -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.example.com"
+      },
+      {
+        "@@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.example.com/blog"
+      },
+      {
+        "@@type": "ListItem",
+        "position": 3,
+        "name": "Test Page",
+        "item": "https://www.example.com/blog/test-page"
+      }
+    ]
+  }
+  </script>
+
+  <!-- BLOCK 6: WARNING — NewsArticle missing recommended fields (author, image) -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "NewsArticle",
+    "headline": "Breaking: Structured Data Found on Page",
+    "datePublished": "2024-06-01"
+  }
+  </script>
+
+  <!-- BLOCK 7: WARNING — Organization missing logo -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "Organization",
+    "name": "No Logo Corp",
+    "url": "https://www.nologocorp.example.com"
+  }
+  </script>
+
+  <!-- BLOCK 8: WARNING — BreadcrumbList missing itemListElement -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "BreadcrumbList",
+    "name": "Incomplete Breadcrumb"
+  }
+  </script>
+
+  <!-- BLOCK 9: ERRORS + WARNINGS — Article missing @@context (error) AND all recommended fields (4 warnings) -->
+  <script type="application/ld+json">
+  {
+    "@@type": "Article",
+    "description": "An article that has a type but is missing its @@context and all recommended fields."
+  }
+  </script>
+
+  <!-- BLOCK 10: INVALID — Missing @@context -->
+  <script type="application/ld+json">
+  {
+    "@@type": "WebPage",
+    "name": "No Context Page",
+    "url": "https://www.example.com/no-context"
+  }
+  </script>
+
+  <!-- BLOCK 11: INVALID — Malformed JSON (parse error) -->
+  <script type="application/ld+json">
+  {
+    "@@context": "https://schema.org",
+    "@@type": "WebPage",
+    "name": "Broken JSON",
+    "tags": [1, 2, 3,,]
+  }
+  </script>
+
+</head>
+<body>
+  <h1>@Model.Name</h1>
+  <p>Schema test page &mdash; 11 JSON-LD blocks: 5 valid, 3 warnings only, 1 errors + warnings, 2 invalid.</p>
+</body>
+</html>

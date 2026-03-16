@@ -1,0 +1,14 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "AuthorDetails": {
+    "Name": "Jordan Smith",
+    "ImageUrl": "https://github.com/Jordan-Smith-Dev.png"
+  },
+  "Category": "Backoffice",
+  "Description": "Adds a Property Restore tab to the Umbraco content editor, allowing editors to compare any saved version against the current draft and selectively restore individual property values without affecting the rest of the content.",
+  "LicenseTypes": [ "Free" ],
+  "IssueTrackerUrl": "https://github.com/Jordan-Smith-Dev/Umbraco.Community.uRestore/issues",
+  "PackageType": "Package",
+  "Tags": [ "umbraco", "restore", "content", "history", "versioning", "backoffice", "properties" ],
+  "Title": "uRestore for Umbraco"
+}

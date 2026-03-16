@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Product>Umbraco.Community.uRestore</Product>
+    <PackageId>Umbraco.Community.uRestore</PackageId>
+    <Title>Umbraco Community uRestore</Title>
+    <Description>Extends the Umbraco backoffice with a Property Restore workspace tab, allowing editors to compare any saved content version against the current draft and selectively restore individual property values without affecting the rest of the content.</Description>
+    <PackageTags>umbraco;umbraco-marketplace;restore;content;history;versioning;properties</PackageTags>
+    <Authors>Jordan Smith</Authors>
+    <Copyright>$([System.DateTime]::UtcNow.ToString(`yyyy`)) © Jordan Smith</Copyright>
+    <PackageProjectUrl>https://github.com/Jordan-Smith-Dev/Umbraco.Community.uRestore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jordan-Smith-Dev/Umbraco.Community.uRestore</RepositoryUrl>
+    <PackageReadmeFile>README_nuget.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon></PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="[17.0.0, 18.0.0)" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="[17.0.0, 18.0.0)" />
+    <PackageReference Include="Umbraco.Cms.Api.Common" Version="[17.0.0, 18.0.0)" />
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="[17.0.0, 18.0.0)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't include the client folder as part of the NuGet build -->
+    <Content Remove="Client\**" />
+
+    <!-- Include the umbraco-package.json so it is visible in the solution -->
+    <None Include="Client\public\umbraco-package.json" Pack="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\README_nuget.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

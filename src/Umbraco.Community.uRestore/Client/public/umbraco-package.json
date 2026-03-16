@@ -1,0 +1,15 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "id": "Umbraco.Community.uRestore",
+  "name": "Umbraco.Community.uRestore",
+  "version": "1.0.0",
+  "allowTelemetry": true,
+  "extensions": [
+    {
+      "name": "uRestore Bundle",
+      "alias": "Umbraco.Community.uRestore.Bundle",
+      "type": "bundle",
+      "js": "/App_Plugins/UmbracoCommunityuRestore/umbraco-community-u-restore.js"
+    }
+  ]
+}
