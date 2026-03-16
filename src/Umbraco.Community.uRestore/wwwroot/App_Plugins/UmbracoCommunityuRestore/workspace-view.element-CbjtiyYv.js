@@ -27,9 +27,9 @@ class se {
     let x = this.extractCommon(v[0], t, e, 0, s);
     if (v[0].oldPos + 1 >= l && x + 1 >= h)
       return r(this.buildValues(v[0].lastComponent, t, e));
-    let R = -1 / 0, V = 1 / 0;
+    let V = -1 / 0, R = 1 / 0;
     const H = () => {
-      for (let p = Math.max(R, -d); p <= Math.min(V, d); p += 2) {
+      for (let p = Math.max(V, -d); p <= Math.min(R, d); p += 2) {
         let C;
         const P = v[p - 1], z = v[p + 1];
         P && (v[p - 1] = void 0);
@@ -45,7 +45,7 @@ class se {
         }
         if (!X || L && P.oldPos < z.oldPos ? C = this.addToPath(z, !0, !1, 0, s) : C = this.addToPath(P, !1, !0, 1, s), x = this.extractCommon(C, t, e, p, s), C.oldPos + 1 >= l && x + 1 >= h)
           return r(this.buildValues(C.lastComponent, t, e)) || !0;
-        v[p] = C, C.oldPos + 1 >= l && (V = Math.min(V, p - 1)), x + 1 >= h && (R = Math.max(R, p + 1));
+        v[p] = C, C.oldPos + 1 >= l && (R = Math.min(R, p - 1)), x + 1 >= h && (V = Math.max(V, p + 1));
       }
       d++;
     };
@@ -339,7 +339,7 @@ async function Oe(i, e, t, s) {
   }
   return a.json();
 }
-async function Re(i, e, t) {
+async function Ve(i, e, t) {
   const s = await fetch(`${ae}/content/${i}/restore`, {
     method: "POST",
     headers: await T(t),
@@ -347,7 +347,7 @@ async function Re(i, e, t) {
   });
   return s.ok ? { ok: !0 } : { ok: !1, error: await s.text().catch(() => "Unknown error") };
 }
-async function Ve(i, e) {
+async function Re(i, e) {
   const t = await fetch(`${ne}/document/${i}/publish`, {
     method: "PUT",
     headers: await T(e),
@@ -487,7 +487,7 @@ M = async function(i) {
   const { version: e } = this._view;
   this._isRestoring = !0;
   try {
-    const r = await u(this, o, W).call(this), h = await Re(this._contentId, {
+    const r = await u(this, o, W).call(this), h = await Ve(this._contentId, {
       versionId: e.versionId,
       propertyAliases: Array.from(this._selectedAliases),
       culture: this._culture || null
@@ -497,7 +497,7 @@ M = async function(i) {
       return;
     }
     if (i) {
-      const l = await Ve(this._contentId, r);
+      const l = await Re(this._contentId, r);
       (s = this._notificationContext) == null || s.peek(l.ok ? "positive" : "warning", {
         data: l.ok ? { headline: "Restored and published", message: `${this._selectedAliases.size} ${this._selectedAliases.size === 1 ? "property" : "properties"} restored and published.` } : { headline: "Restored but not published", message: l.error ?? "Draft saved but could not be published." }
       });
@@ -588,7 +588,7 @@ me = function(i) {
 
                 <uui-table>
                     <uui-table-head>
-                        <uui-table-head-cell>Date</uui-table-head-cell>
+                        <uui-table-head-cell>Version</uui-table-head-cell>
                         <uui-table-head-cell>Status</uui-table-head-cell>
                         <uui-table-head-cell></uui-table-head-cell>
                     </uui-table-head>
@@ -1007,11 +1007,11 @@ b([
   _()
 ], m.prototype, "_culture", 2);
 m = b([
-  ye("umb-u-rollback-workspace-view")
+  ye("umb-u-restore-workspace-view")
 ], m);
 const qe = m;
 export {
-  m as UmbURollbackWorkspaceViewElement,
+  m as UmbURestoreWorkspaceViewElement,
   qe as default
 };
-//# sourceMappingURL=workspace-view.element-LBG31nZQ.js.map
+//# sourceMappingURL=workspace-view.element-CbjtiyYv.js.map
