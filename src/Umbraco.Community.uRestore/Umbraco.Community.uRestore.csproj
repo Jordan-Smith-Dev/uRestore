@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Product>Umbraco.Community.uRestore</Product>
     <PackageId>Umbraco.Community.uRestore</PackageId>
-    <Title>Umbraco Community uRestore</Title>
+    <Title>uRestore</Title>
     <Description>Extends the Umbraco backoffice with a Property Restore workspace tab, allowing editors to compare any saved content version against the current draft and selectively restore individual property values without affecting the rest of the content.</Description>
     <PackageTags>umbraco;umbraco-marketplace;restore;content;history;versioning;properties</PackageTags>
     <Authors>Jordan Smith</Authors>
