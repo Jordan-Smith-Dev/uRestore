@@ -300,7 +300,7 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
 
                 <uui-table>
                     <uui-table-head>
-                        <uui-table-head-cell>Date</uui-table-head-cell>
+                        <uui-table-head-cell>Version</uui-table-head-cell>
                         <uui-table-head-cell>Status</uui-table-head-cell>
                         <uui-table-head-cell></uui-table-head-cell>
                     </uui-table-head>
