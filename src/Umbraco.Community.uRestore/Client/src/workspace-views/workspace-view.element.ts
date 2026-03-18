@@ -42,6 +42,8 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
     @state() private _currentPage: number = 1;
     @state() private _culture: string = "";
 
+    private _cachedVersions: ContentVersionModel[] | null = null;
+
     get #cultureError(): string {
         if (this._culture === "") return "";
         return this.#isValidCulture(this._culture)
@@ -95,6 +97,7 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
                 skip, PAGE_SIZE
             );
             this._totalVersions = total;
+            if (versions.length > 0) this._cachedVersions = versions;
             this._view = { type: "versions", versions };
         } catch (e) {
             this._view = { type: "error", message: e instanceof Error ? e.message : "Failed to load version history." };
@@ -117,7 +120,13 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
         }
     }
 
-    #backToVersionList(): void { this.#loadVersions(this._currentPage); }
+    #backToVersionList(): void {
+        if (this._cachedVersions) {
+            this._view = { type: "versions", versions: this._cachedVersions };
+        } else {
+            this.#loadVersions(this._currentPage);
+        }
+    }
 
     #isValidCulture(value: string): boolean {
         return value === "" || /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{2,8})*$/.test(value);
@@ -266,7 +275,7 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
         if (versions.length === 0) {
             return html`
                 <div class="detail-header">
-                    <uui-button look="primary" label="Back" @click=${() => this.#loadVersions(1)}>
+                    <uui-button look="primary" label="Back" @click=${this.#backToVersionList}>
                         <uui-icon name="icon-arrow-left"></uui-icon>
                         Back
                     </uui-button>

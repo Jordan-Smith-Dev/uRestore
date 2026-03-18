@@ -27,25 +27,25 @@ class ne {
     let x = this.extractCommon(g[0], t, e, 0, s);
     if (g[0].oldPos + 1 >= u && x + 1 >= h)
       return r(this.buildValues(g[0].lastComponent, t, e));
-    let V = -1 / 0, R = 1 / 0;
+    let R = -1 / 0, L = 1 / 0;
     const Y = () => {
-      for (let p = Math.max(V, -d); p <= Math.min(R, d); p += 2) {
+      for (let p = Math.max(R, -d); p <= Math.min(L, d); p += 2) {
         let C;
         const P = g[p - 1], z = g[p + 1];
         P && (g[p - 1] = void 0);
-        let L = !1;
+        let N = !1;
         if (z) {
           const K = z.oldPos - p;
-          L = z && 0 <= K && K < h;
+          N = z && 0 <= K && K < h;
         }
         const Q = P && P.oldPos + 1 < u;
-        if (!L && !Q) {
+        if (!N && !Q) {
           g[p] = void 0;
           continue;
         }
-        if (!Q || L && P.oldPos < z.oldPos ? C = this.addToPath(z, !0, !1, 0, s) : C = this.addToPath(P, !1, !0, 1, s), x = this.extractCommon(C, t, e, p, s), C.oldPos + 1 >= u && x + 1 >= h)
+        if (!Q || N && P.oldPos < z.oldPos ? C = this.addToPath(z, !0, !1, 0, s) : C = this.addToPath(P, !1, !0, 1, s), x = this.extractCommon(C, t, e, p, s), C.oldPos + 1 >= u && x + 1 >= h)
           return r(this.buildValues(C.lastComponent, t, e)) || !0;
-        g[p] = C, C.oldPos + 1 >= u && (R = Math.min(R, p - 1)), x + 1 >= h && (V = Math.max(V, p + 1));
+        g[p] = C, C.oldPos + 1 >= u && (L = Math.min(L, p - 1)), x + 1 >= h && (R = Math.max(R, p + 1));
       }
       d++;
     };
@@ -150,12 +150,12 @@ function te(i, e) {
       return i.slice(-t);
   return i.slice(-t);
 }
-function U(i, e, t) {
+function j(i, e, t) {
   if (i.slice(0, e.length) != e)
     throw Error(`string ${JSON.stringify(i)} doesn't start with prefix ${JSON.stringify(e)}; this is a bug`);
   return t + i.slice(e.length);
 }
-function j(i, e, t) {
+function M(i, e, t) {
   if (!e)
     return i + t;
   if (i.slice(-e.length) != e)
@@ -163,10 +163,10 @@ function j(i, e, t) {
   return i.slice(0, -e.length) + t;
 }
 function S(i, e) {
-  return U(i, e, "");
+  return j(i, e, "");
 }
 function D(i, e) {
-  return j(i, e, "");
+  return M(i, e, "");
 }
 function ie(i, e) {
   return e.slice(0, ze(i, e));
@@ -198,7 +198,7 @@ function A(i) {
     ;
   return i.substring(e + 1);
 }
-function y(i) {
+function w(i) {
   const e = i.match(/^\s*/);
   return e ? e[0] : "";
 }
@@ -244,40 +244,40 @@ function De(i, e, t) {
 }
 function ae(i, e, t, s) {
   if (e && t) {
-    const n = y(e.value), a = A(e.value), r = y(t.value), h = A(t.value);
+    const n = w(e.value), a = A(e.value), r = w(t.value), h = A(t.value);
     if (i) {
       const u = ee(n, r);
-      i.value = j(i.value, r, u), e.value = S(e.value, u), t.value = S(t.value, u);
+      i.value = M(i.value, r, u), e.value = S(e.value, u), t.value = S(t.value, u);
     }
     if (s) {
       const u = te(a, h);
-      s.value = U(s.value, h, u), e.value = D(e.value, u), t.value = D(t.value, u);
+      s.value = j(s.value, h, u), e.value = D(e.value, u), t.value = D(t.value, u);
     }
   } else if (t) {
     if (i) {
-      const n = y(t.value);
+      const n = w(t.value);
       t.value = t.value.substring(n.length);
     }
     if (s) {
-      const n = y(s.value);
+      const n = w(s.value);
       s.value = s.value.substring(n.length);
     }
   } else if (i && s) {
-    const n = y(s.value), a = y(e.value), r = A(e.value), h = ee(n, a);
+    const n = w(s.value), a = w(e.value), r = A(e.value), h = ee(n, a);
     e.value = S(e.value, h);
     const u = te(S(n, h), r);
-    e.value = D(e.value, u), s.value = U(s.value, n, u), i.value = j(i.value, n, n.slice(0, n.length - u.length));
+    e.value = D(e.value, u), s.value = j(s.value, n, u), i.value = M(i.value, n, n.slice(0, n.length - u.length));
   } else if (s) {
-    const n = y(s.value), a = A(e.value), r = ie(a, n);
+    const n = w(s.value), a = A(e.value), r = ie(a, n);
     e.value = D(e.value, r);
   } else if (i) {
-    const n = A(i.value), a = y(e.value), r = ie(n, a);
+    const n = A(i.value), a = w(e.value), r = ie(n, a);
     e.value = S(e.value, r);
   }
 }
 class Ie extends ne {
   constructor() {
-    super(...arguments), this.tokenize = Te;
+    super(...arguments), this.tokenize = Oe;
   }
   equals(e, t, s) {
     return s.ignoreWhitespace ? ((!s.newlineIsToken || !e.includes(`
@@ -287,11 +287,11 @@ class Ie extends ne {
 `) && (t = t.slice(0, -1))), super.equals(e, t, s);
   }
 }
-const We = new Ie();
-function Oe(i, e, t) {
-  return We.diff(i, e, t);
+const Ve = new Ie();
+function We(i, e, t) {
+  return Ve.diff(i, e, t);
 }
-function Te(i, e) {
+function Oe(i, e) {
   e.stripTrailingCr && (i = i.replace(/\r\n/g, `
 `));
   const t = [], s = i.split(/(\n|\r\n)/);
@@ -302,17 +302,17 @@ function Te(i, e) {
   }
   return t;
 }
-const re = "/umbraco/umbracommunityurestore/api/v1", le = "/umbraco/management/api/v1";
-async function O(i) {
+const re = "/umbraco/umbracommunityurestore/api/v1", oe = "/umbraco/management/api/v1";
+async function W(i) {
   return {
     Authorization: `Bearer ${i}`,
     "Content-Type": "application/json"
   };
 }
-async function Ve(i, e, t, s = 0, n = 10) {
-  const a = new URL(`${le}/document-version`, window.location.origin);
+async function Te(i, e, t, s = 0, n = 10) {
+  const a = new URL(`${oe}/document-version`, window.location.origin);
   a.searchParams.set("documentId", i), t && a.searchParams.set("culture", t), a.searchParams.set("skip", String(s)), a.searchParams.set("take", String(n));
-  const r = await fetch(a.toString(), { headers: await O(e) });
+  const r = await fetch(a.toString(), { headers: await W(e) });
   if (!r.ok) {
     const d = await r.text().catch(() => "");
     throw new Error(`Versions API returned ${r.status}: ${d}`);
@@ -332,7 +332,7 @@ async function Re(i, e, t, s) {
     window.location.origin
   );
   s && n.searchParams.set("culture", s);
-  const a = await fetch(n.toString(), { headers: await O(t) });
+  const a = await fetch(n.toString(), { headers: await W(t) });
   if (!a.ok) {
     const r = await a.text().catch(() => "");
     throw new Error(`Properties API returned ${a.status}: ${r}`);
@@ -342,33 +342,33 @@ async function Re(i, e, t, s) {
 async function Le(i, e, t) {
   const s = await fetch(`${re}/content/${i}/restore`, {
     method: "POST",
-    headers: await O(t),
+    headers: await W(t),
     body: JSON.stringify(e)
   });
   return s.ok ? { ok: !0 } : { ok: !1, error: await s.text().catch(() => "Unknown error") };
 }
 async function Ne(i, e) {
-  const t = await fetch(`${le}/document/${i}/publish`, {
+  const t = await fetch(`${oe}/document/${i}/publish`, {
     method: "PUT",
-    headers: await O(e),
+    headers: await W(e),
     body: JSON.stringify({ publishSchedules: [] })
   });
   return t.ok ? { ok: !0 } : { ok: !1, error: await t.text().catch(() => "Unknown error") };
 }
-var Ue = Object.defineProperty, je = Object.getOwnPropertyDescriptor, oe = (i) => {
+var Ue = Object.defineProperty, je = Object.getOwnPropertyDescriptor, le = (i) => {
   throw TypeError(i);
-}, w = (i, e, t, s) => {
+}, b = (i, e, t, s) => {
   for (var n = s > 1 ? void 0 : s ? je(e, t) : e, a = i.length - 1, r; a >= 0; a--)
     (r = i[a]) && (n = (s ? r(e, t, n) : r(n)) || n);
   return s && n && Ue(e, t, n), n;
-}, ue = (i, e, t) => e.has(i) || oe("Cannot " + t), N = (i, e, t) => (ue(i, e, "read from private field"), t ? t.call(i) : e.get(i)), Me = (i, e, t) => e.has(i) ? oe("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(i) : e.set(i, t), o = (i, e, t) => (ue(i, e, "access private method"), t), l, I, ce, T, b, he, G, H, de, M, X, F, fe, pe, B, E, me, W, J, q, ve, ge, be, we;
-const Z = 10;
+}, ue = (i, e, t) => e.has(i) || le("Cannot " + t), U = (i, e, t) => (ue(i, e, "read from private field"), t ? t.call(i) : e.get(i)), Me = (i, e, t) => e.has(i) ? le("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(i) : e.set(i, t), l = (i, e, t) => (ue(i, e, "access private method"), t), o, I, ce, O, y, he, T, H, de, F, X, B, fe, pe, J, E, me, V, q, Z, ve, ge, be, we;
+const G = 10;
 let m = class extends Ce(ye) {
   constructor() {
-    super(...arguments), Me(this, l), this._view = { type: "loading" }, this._contentId = "", this._selectedAliases = /* @__PURE__ */ new Set(), this._isRestoring = !1, this._showConfirm = !1, this._totalVersions = 0, this._currentPage = 1, this._culture = "";
+    super(...arguments), Me(this, o), this._view = { type: "loading" }, this._contentId = "", this._selectedAliases = /* @__PURE__ */ new Set(), this._isRestoring = !1, this._showConfirm = !1, this._totalVersions = 0, this._currentPage = 1, this._culture = "", this._cachedVersions = null;
   }
   connectedCallback() {
-    super.connectedCallback(), o(this, l, ce).call(this);
+    super.connectedCallback(), l(this, o, ce).call(this);
   }
   // ─── Root render ───────────────────────────────────────────────────────────
   render() {
@@ -378,13 +378,13 @@ let m = class extends Ce(ye) {
         case "comparing":
           return v;
         case "versions":
-          return o(this, l, ge).call(this, this._view.versions);
+          return l(this, o, ge).call(this, this._view.versions);
         case "detail":
-          return o(this, l, be).call(this, this._view.version, this._view.properties);
+          return l(this, o, be).call(this, this._view.version, this._view.properties);
         case "error":
           return c`
                         <div class="detail-header">
-                            <uui-button look="primary" label="Back" @click=${o(this, l, G)}>
+                            <uui-button look="primary" label="Back" @click=${l(this, o, T)}>
                                 <uui-icon name="icon-arrow-left"></uui-icon>
                                 Back
                             </uui-button>
@@ -393,9 +393,9 @@ let m = class extends Ce(ye) {
                             <div class="empty-state">
                                 <uui-icon name="icon-alert"></uui-icon>
                                 <p class="error-headline">Something went wrong</p>
-                                <p class="error-detail">${o(this, l, me).call(this, this._view.message)}</p>
+                                <p class="error-detail">${l(this, o, me).call(this, this._view.message)}</p>
                                 ${this._culture ? c`
-                                    <uui-button look="primary" label="Clear filter" @click=${o(this, l, X)}>
+                                    <uui-button look="primary" label="Clear filter" @click=${l(this, o, X)}>
                                         Clear filter
                                     </uui-button>` : v}
                             </div>
@@ -407,14 +407,14 @@ let m = class extends Ce(ye) {
             <umb-body-layout>
                 ${i ? c`<uui-loader-bar></uui-loader-bar>` : v}
                 <div class="container">${e}</div>
-                ${this._showConfirm ? o(this, l, we).call(this) : v}
+                ${this._showConfirm ? l(this, o, we).call(this) : v}
             </umb-body-layout>
         `;
   }
 };
-l = /* @__PURE__ */ new WeakSet();
+o = /* @__PURE__ */ new WeakSet();
 I = function() {
-  return this._culture === "" || o(this, l, H).call(this, this._culture) ? "" : "Enter a valid culture code (e.g. en-US, fr-FR) or leave blank for invariant.";
+  return this._culture === "" || l(this, o, H).call(this, this._culture) ? "" : "Enter a valid culture code (e.g. en-US, fr-FR) or leave blank for invariant.";
 };
 ce = function() {
   this.consumeContext($e, (i) => {
@@ -423,11 +423,11 @@ ce = function() {
     this._notificationContext = i;
   }), this.consumeContext(ke, (i) => {
     i && (this._workspaceCtx = i, this.observe(i.unique, async (e) => {
-      e && e !== this._contentId && (this._contentId = e, await o(this, l, b).call(this, 1));
+      e && e !== this._contentId && (this._contentId = e, await l(this, o, y).call(this, 1));
     }));
   });
 };
-T = async function() {
+O = async function() {
   var e;
   const i = (e = this._authContext) == null ? void 0 : e.getOpenApiConfiguration();
   if (!(i != null && i.token)) return "";
@@ -437,17 +437,17 @@ T = async function() {
   }
   return i.token;
 };
-b = async function(i = this._currentPage) {
+y = async function(i = this._currentPage) {
   this._currentPage = i, this._view = { type: "loading" };
   try {
-    const e = await o(this, l, T).call(this), t = (i - 1) * Z, { versions: s, total: n } = await Ve(
+    const e = await l(this, o, O).call(this), t = (i - 1) * G, { versions: s, total: n } = await Te(
       this._contentId,
       e,
       this._culture || void 0,
       t,
-      Z
+      G
     );
-    this._totalVersions = n, this._view = { type: "versions", versions: s };
+    this._totalVersions = n, s.length > 0 && (this._cachedVersions = s), this._view = { type: "versions", versions: s };
   } catch (e) {
     this._view = { type: "error", message: e instanceof Error ? e.message : "Failed to load version history." };
   }
@@ -455,7 +455,7 @@ b = async function(i = this._currentPage) {
 he = async function(i) {
   this._view = { type: "comparing" }, this._selectedAliases = /* @__PURE__ */ new Set();
   try {
-    const e = await o(this, l, T).call(this), t = await Re(
+    const e = await l(this, o, O).call(this), t = await Re(
       this._contentId,
       i.versionId,
       e,
@@ -466,8 +466,8 @@ he = async function(i) {
     this._view = { type: "error", message: e instanceof Error ? e.message : "Failed to load property comparison." };
   }
 };
-G = function() {
-  o(this, l, b).call(this, this._currentPage);
+T = function() {
+  this._cachedVersions ? this._view = { type: "versions", versions: this._cachedVersions } : l(this, o, y).call(this, this._currentPage);
 };
 H = function(i) {
   return i === "" || /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{2,8})*$/.test(i);
@@ -475,13 +475,13 @@ H = function(i) {
 de = function(i) {
   this._culture = i;
 };
-M = function() {
-  o(this, l, H).call(this, this._culture) && o(this, l, b).call(this, 1);
+F = function() {
+  l(this, o, H).call(this, this._culture) && l(this, o, y).call(this, 1);
 };
 X = function() {
-  this._culture = "", o(this, l, b).call(this, 1);
+  this._culture = "", l(this, o, y).call(this, 1);
 };
-F = function(i) {
+B = function(i) {
   const e = new Set(this._selectedAliases);
   e.has(i) ? e.delete(i) : e.add(i), this._selectedAliases = e;
 };
@@ -493,13 +493,13 @@ fe = function(i) {
 pe = function() {
   this._view.type !== "detail" || this._selectedAliases.size === 0 || (this._showConfirm = !0);
 };
-B = async function(i) {
+J = async function(i) {
   var t, s, n, a;
   if (this._showConfirm = !1, this._view.type !== "detail") return;
   const { version: e } = this._view;
   this._isRestoring = !0;
   try {
-    const r = await o(this, l, T).call(this), h = await Le(this._contentId, {
+    const r = await l(this, o, O).call(this), h = await Le(this._contentId, {
       versionId: e.versionId,
       propertyAliases: Array.from(this._selectedAliases),
       culture: this._culture || null
@@ -516,7 +516,7 @@ B = async function(i) {
     } else
       (n = this._notificationContext) == null || n.peek("positive", { data: { headline: "Properties restored", message: `${this._selectedAliases.size} ${this._selectedAliases.size === 1 ? "property" : "properties"} restored as a draft.` } });
     await Promise.all([
-      o(this, l, b).call(this, 1),
+      l(this, o, y).call(this, 1),
       (a = this._workspaceCtx) == null ? void 0 : a.load(this._contentId)
     ]);
   } finally {
@@ -536,7 +536,7 @@ me = function(i) {
     }
   return i;
 };
-W = function(i) {
+V = function(i) {
   if (!i) return "";
   try {
     return JSON.stringify(JSON.parse(i), null, 2);
@@ -544,7 +544,7 @@ W = function(i) {
     return i;
   }
 };
-J = function(i) {
+q = function(i) {
   if (!i) return !1;
   try {
     return JSON.parse(i), !0;
@@ -552,12 +552,12 @@ J = function(i) {
     return !1;
   }
 };
-q = function(i) {
-  return i ? c`<pre class="value-preview">${o(this, l, W).call(this, i)}</pre>` : c`<em class="value-empty">empty</em>`;
+Z = function(i) {
+  return i ? c`<pre class="value-preview">${l(this, o, V).call(this, i)}</pre>` : c`<em class="value-empty">empty</em>`;
 };
 ve = function(i, e) {
   if (!i && !e) return c`<em class="value-empty">empty</em>`;
-  const t = o(this, l, W).call(this, i), s = o(this, l, W).call(this, e), n = o(this, l, J).call(this, i) || o(this, l, J).call(this, e) ? Oe(s, t) : De(s, t);
+  const t = l(this, o, V).call(this, i), s = l(this, o, V).call(this, e), n = l(this, o, q).call(this, i) || l(this, o, q).call(this, e) ? We(s, t) : De(s, t);
   return c`
             <pre class="value-preview diff-preview">${n.map(
     (a) => a.removed ? c`<span class="diff-removed">${a.value}</span>` : a.added ? c`<span class="diff-added">${a.value}</span>` : a.value
@@ -565,10 +565,10 @@ ve = function(i, e) {
         `;
 };
 ge = function(i) {
-  const e = Math.ceil(this._totalVersions / Z);
+  const e = Math.ceil(this._totalVersions / G);
   return i.length === 0 ? c`
                 <div class="detail-header">
-                    <uui-button look="primary" label="Back" @click=${() => o(this, l, b).call(this, 1)}>
+                    <uui-button look="primary" label="Back" @click=${l(this, o, T)}>
                         <uui-icon name="icon-arrow-left"></uui-icon>
                         Back
                     </uui-button>
@@ -578,7 +578,7 @@ ge = function(i) {
                         <uui-icon name="icon-history"></uui-icon>
                         ${this._culture ? c`
                                 <p>No saved versions found for culture <strong>${this._culture}</strong>.</p>
-                                <uui-button look="primary" label="Clear filter" @click=${o(this, l, X)}>
+                                <uui-button look="primary" label="Clear filter" @click=${l(this, o, X)}>
                                     Clear filter
                                 </uui-button>` : c`<p>No saved versions found for this content.</p>`}
                     </div>
@@ -589,7 +589,7 @@ ge = function(i) {
                     <h4 class="view-title">Property Restore</h4>
                     <p class="hint">Select a version to compare its properties against the current draft, then choose which values to restore.</p>
                 </div>
-                <uui-button look="primary" label="Refresh" @click=${() => o(this, l, b).call(this, 1)}>
+                <uui-button look="primary" label="Refresh" @click=${() => l(this, o, y).call(this, 1)}>
                     <uui-icon name="icon-refresh"></uui-icon>
                     Refresh
                 </uui-button>
@@ -602,15 +602,15 @@ ge = function(i) {
                         id="culture-input"
                         placeholder="e.g. en-US (leave blank for invariant)"
                         .value=${this._culture}
-                        ?error=${!!N(this, l, I)}
-                        @input=${(t) => o(this, l, de).call(this, t.target.value)}
+                        ?error=${!!U(this, o, I)}
+                        @input=${(t) => l(this, o, de).call(this, t.target.value)}
                         @keydown=${(t) => {
-    t.key === "Enter" && o(this, l, M).call(this);
+    t.key === "Enter" && l(this, o, F).call(this);
   }}>
                     </uui-input>
-                    <uui-button look="primary" label="Search" @click=${o(this, l, M)}>Search</uui-button>
+                    <uui-button look="primary" label="Search" @click=${l(this, o, F)}>Search</uui-button>
                 </div>
-                ${N(this, l, I) ? c`<p class="culture-error">${N(this, l, I)}</p>` : c`<p class="hint">
+                ${U(this, o, I) ? c`<p class="culture-error">${U(this, o, I)}</p>` : c`<p class="hint">
                         For multilingual sites, enter a culture code to filter versions by language.
                         Leave blank for invariant (non-language-specific) values.
                     </p>`}
@@ -628,7 +628,7 @@ ge = function(i) {
                         <uui-table-row>
                             <uui-table-cell class="cell-date">
                                 <uui-icon name="icon-history" class="row-icon"></uui-icon>
-                                ${o(this, l, E).call(this, t.createDate)}
+                                ${l(this, o, E).call(this, t.createDate)}
                             </uui-table-cell>
                             <uui-table-cell class="cell-status">
                                 ${t.isCurrentDraft ? c`<uui-tag color="warning" look="primary" size="s">Current draft</uui-tag>` : v}
@@ -641,7 +641,7 @@ ge = function(i) {
                                     look="secondary"
                                     label="Compare with current draft"
                                     ?disabled=${t.isCurrentDraft}
-                                    @click=${() => o(this, l, he).call(this, t)}>
+                                    @click=${() => l(this, o, he).call(this, t)}>
                                     Compare
                                 </uui-button>
                             </uui-table-cell>
@@ -655,7 +655,7 @@ ge = function(i) {
                     <uui-pagination
                         .total=${e}
                         .current=${this._currentPage}
-                        @change=${(t) => o(this, l, b).call(this, t.target.current)}>
+                        @change=${(t) => l(this, o, y).call(this, t.target.current)}>
                     </uui-pagination>
                 </div>
             ` : v}
@@ -665,7 +665,7 @@ be = function(i, e) {
   const t = this._selectedAliases.size, s = t === e.length, n = e.filter((a) => a.hasChanges).length;
   return c`
             <div class="detail-header">
-                <uui-button look="primary" label="Back" @click=${o(this, l, G)}>
+                <uui-button look="primary" label="Back" @click=${l(this, o, T)}>
                     <uui-icon name="icon-arrow-left"></uui-icon>
                     Back
                 </uui-button>
@@ -673,7 +673,7 @@ be = function(i, e) {
 
             <uui-box>
                 <div slot="headline">
-                    Property Restore &mdash; Version from ${o(this, l, E).call(this, i.createDate)}
+                    Property Restore &mdash; Version from ${l(this, o, E).call(this, i.createDate)}
                 </div>
 
                 <p class="hint comparison-hint">
@@ -695,13 +695,13 @@ be = function(i, e) {
                                 label="Select all"
                                 .checked=${s}
                                 .indeterminate=${t > 0 && !s}
-                                @change=${o(this, l, fe)}>
+                                @change=${l(this, o, fe)}>
                             </uui-checkbox>
                         </uui-table-head-cell>
                         <uui-table-head-cell class="col-property">Property</uui-table-head-cell>
                         <uui-table-head-cell class="col-status">Status</uui-table-head-cell>
                         <uui-table-head-cell>Current draft value</uui-table-head-cell>
-                        <uui-table-head-cell>Value in this version (${o(this, l, E).call(this, i.createDate)})</uui-table-head-cell>
+                        <uui-table-head-cell>Value in this version (${l(this, o, E).call(this, i.createDate)})</uui-table-head-cell>
                     </uui-table-head>
 
                     ${e.map((a) => c`
@@ -709,13 +709,13 @@ be = function(i, e) {
                             class="${a.hasChanges ? "row-changed" : ""}"
                             selectable
                             ?selected=${this._selectedAliases.has(a.alias)}
-                            @click=${() => o(this, l, F).call(this, a.alias)}>
+                            @click=${() => l(this, o, B).call(this, a.alias)}>
 
                             <uui-table-cell class="checkbox-cell" @click=${(r) => r.stopPropagation()}>
                                 <uui-checkbox
                                     label="Select ${a.label}"
                                     .checked=${this._selectedAliases.has(a.alias)}
-                                    @change=${() => o(this, l, F).call(this, a.alias)}>
+                                    @change=${() => l(this, o, B).call(this, a.alias)}>
                                 </uui-checkbox>
                             </uui-table-cell>
 
@@ -739,11 +739,11 @@ be = function(i, e) {
                             </uui-table-cell>
 
                             <uui-table-cell class="cell-value">
-                                ${o(this, l, q).call(this, a.currentValue)}
+                                ${l(this, o, Z).call(this, a.currentValue)}
                             </uui-table-cell>
 
                             <uui-table-cell class="cell-value">
-                                ${a.hasChanges ? o(this, l, ve).call(this, a.historicalValue, a.currentValue) : o(this, l, q).call(this, a.historicalValue)}
+                                ${a.hasChanges ? l(this, o, ve).call(this, a.historicalValue, a.currentValue) : l(this, o, Z).call(this, a.historicalValue)}
                             </uui-table-cell>
                         </uui-table-row>
                     `)}
@@ -758,7 +758,7 @@ be = function(i, e) {
                     <uui-button
                         look="primary"
                         label="Restore selected"
-                        @click=${o(this, l, pe)}>
+                        @click=${l(this, o, pe)}>
                         Restore ${t} ${t === 1 ? "property" : "properties"}
                     </uui-button>` : v}
             </div>
@@ -775,14 +775,14 @@ we = function() {
                     <uui-dialog-layout headline="Confirm Property Restore">
                         <p>
                             You are about to restore <strong>${e} ${e === 1 ? "property" : "properties"}</strong>
-                            from the version saved on <strong>${o(this, l, E).call(this, i.createDate)}</strong>.
+                            from the version saved on <strong>${l(this, o, E).call(this, i.createDate)}</strong>.
                         </p>
                         <p>How would you like to save the restored values?</p>
                         <uui-button slot="actions" look="secondary" label="Cancel" @click=${() => {
     this._showConfirm = !1;
   }}>Cancel</uui-button>
-                        <uui-button slot="actions" look="outline" label="Save as draft" @click=${() => o(this, l, B).call(this, !1)}>Save as draft</uui-button>
-                        <uui-button slot="actions" look="primary" color="positive" label="Save and publish" @click=${() => o(this, l, B).call(this, !0)}>Save &amp; Publish</uui-button>
+                        <uui-button slot="actions" look="outline" label="Save as draft" @click=${() => l(this, o, J).call(this, !1)}>Save as draft</uui-button>
+                        <uui-button slot="actions" look="primary" color="positive" label="Save and publish" @click=${() => l(this, o, J).call(this, !0)}>Save &amp; Publish</uui-button>
                     </uui-dialog-layout>
                 </uui-dialog>
             </div>
@@ -1023,31 +1023,31 @@ m.styles = _e`
             max-width: 480px;
         }
     `;
-w([
+b([
   _()
 ], m.prototype, "_view", 2);
-w([
+b([
   _()
 ], m.prototype, "_contentId", 2);
-w([
+b([
   _()
 ], m.prototype, "_selectedAliases", 2);
-w([
+b([
   _()
 ], m.prototype, "_isRestoring", 2);
-w([
+b([
   _()
 ], m.prototype, "_showConfirm", 2);
-w([
+b([
   _()
 ], m.prototype, "_totalVersions", 2);
-w([
+b([
   _()
 ], m.prototype, "_currentPage", 2);
-w([
+b([
   _()
 ], m.prototype, "_culture", 2);
-m = w([
+m = b([
   xe("umb-u-restore-workspace-view")
 ], m);
 const Ge = m;
@@ -1055,4 +1055,4 @@ export {
   m as UmbURestoreWorkspaceViewElement,
   Ge as default
 };
-//# sourceMappingURL=workspace-view.element-BzlAcIjA.js.map
+//# sourceMappingURL=workspace-view.element-Byi4Lb_j.js.map
