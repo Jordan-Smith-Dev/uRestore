@@ -1,14 +1,14 @@
-import { LitElement as be, html as c, nothing as g, css as we, state as _, customElement as ye } from "@umbraco-cms/backoffice/external/lit";
-import { UmbElementMixin as _e } from "@umbraco-cms/backoffice/element-api";
-import { UMB_DOCUMENT_WORKSPACE_CONTEXT as xe } from "@umbraco-cms/backoffice/document";
-import { UMB_AUTH_CONTEXT as Ce } from "@umbraco-cms/backoffice/auth";
-import { UMB_NOTIFICATION_CONTEXT as ke } from "@umbraco-cms/backoffice/notification";
-class se {
+import { LitElement as ye, nothing as v, html as c, css as _e, state as _, customElement as xe } from "@umbraco-cms/backoffice/external/lit";
+import { UmbElementMixin as Ce } from "@umbraco-cms/backoffice/element-api";
+import { UMB_DOCUMENT_WORKSPACE_CONTEXT as ke } from "@umbraco-cms/backoffice/document";
+import { UMB_AUTH_CONTEXT as $e } from "@umbraco-cms/backoffice/auth";
+import { UMB_NOTIFICATION_CONTEXT as Pe } from "@umbraco-cms/backoffice/notification";
+class ne {
   diff(e, t, s = {}) {
     let n;
     typeof s == "function" ? (n = s, s = {}) : "callback" in s && (n = s.callback);
-    const a = this.castInput(e, s), r = this.castInput(t, s), h = this.removeEmpty(this.tokenize(a, s)), l = this.removeEmpty(this.tokenize(r, s));
-    return this.diffWithOptionsObj(h, l, s, n);
+    const a = this.castInput(e, s), r = this.castInput(t, s), h = this.removeEmpty(this.tokenize(a, s)), u = this.removeEmpty(this.tokenize(r, s));
+    return this.diffWithOptionsObj(h, u, s, n);
   }
   diffWithOptionsObj(e, t, s, n) {
     var a;
@@ -20,32 +20,32 @@ class se {
         return;
       } else
         return p;
-    }, h = t.length, l = e.length;
-    let d = 1, f = h + l;
+    }, h = t.length, u = e.length;
+    let d = 1, f = h + u;
     s.maxEditLength != null && (f = Math.min(f, s.maxEditLength));
-    const k = (a = s.timeout) !== null && a !== void 0 ? a : 1 / 0, $ = Date.now() + k, v = [{ oldPos: -1, lastComponent: void 0 }];
-    let x = this.extractCommon(v[0], t, e, 0, s);
-    if (v[0].oldPos + 1 >= l && x + 1 >= h)
-      return r(this.buildValues(v[0].lastComponent, t, e));
+    const k = (a = s.timeout) !== null && a !== void 0 ? a : 1 / 0, $ = Date.now() + k, g = [{ oldPos: -1, lastComponent: void 0 }];
+    let x = this.extractCommon(g[0], t, e, 0, s);
+    if (g[0].oldPos + 1 >= u && x + 1 >= h)
+      return r(this.buildValues(g[0].lastComponent, t, e));
     let V = -1 / 0, R = 1 / 0;
-    const H = () => {
+    const Y = () => {
       for (let p = Math.max(V, -d); p <= Math.min(R, d); p += 2) {
         let C;
-        const P = v[p - 1], z = v[p + 1];
-        P && (v[p - 1] = void 0);
+        const P = g[p - 1], z = g[p + 1];
+        P && (g[p - 1] = void 0);
         let L = !1;
         if (z) {
-          const Y = z.oldPos - p;
-          L = z && 0 <= Y && Y < h;
+          const K = z.oldPos - p;
+          L = z && 0 <= K && K < h;
         }
-        const X = P && P.oldPos + 1 < l;
-        if (!L && !X) {
-          v[p] = void 0;
+        const Q = P && P.oldPos + 1 < u;
+        if (!L && !Q) {
+          g[p] = void 0;
           continue;
         }
-        if (!X || L && P.oldPos < z.oldPos ? C = this.addToPath(z, !0, !1, 0, s) : C = this.addToPath(P, !1, !0, 1, s), x = this.extractCommon(C, t, e, p, s), C.oldPos + 1 >= l && x + 1 >= h)
+        if (!Q || L && P.oldPos < z.oldPos ? C = this.addToPath(z, !0, !1, 0, s) : C = this.addToPath(P, !1, !0, 1, s), x = this.extractCommon(C, t, e, p, s), C.oldPos + 1 >= u && x + 1 >= h)
           return r(this.buildValues(C.lastComponent, t, e)) || !0;
-        v[p] = C, C.oldPos + 1 >= l && (R = Math.min(R, p - 1)), x + 1 >= h && (V = Math.max(V, p + 1));
+        g[p] = C, C.oldPos + 1 >= u && (R = Math.min(R, p - 1)), x + 1 >= h && (V = Math.max(V, p + 1));
       }
       d++;
     };
@@ -54,12 +54,12 @@ class se {
         setTimeout(function() {
           if (d > f || Date.now() > $)
             return n(void 0);
-          H() || p();
+          Y() || p();
         }, 0);
       })();
     else
       for (; d <= f && Date.now() <= $; ) {
-        const p = H();
+        const p = Y();
         if (p)
           return p;
       }
@@ -76,10 +76,10 @@ class se {
   }
   extractCommon(e, t, s, n, a) {
     const r = t.length, h = s.length;
-    let l = e.oldPos, d = l - n, f = 0;
-    for (; d + 1 < r && l + 1 < h && this.equals(s[l + 1], t[d + 1], a); )
-      d++, l++, f++, a.oneChangePerToken && (e.lastComponent = { count: 1, previousComponent: e.lastComponent, added: !1, removed: !1 });
-    return f && !a.oneChangePerToken && (e.lastComponent = { count: f, previousComponent: e.lastComponent, added: !1, removed: !1 }), e.oldPos = l, d;
+    let u = e.oldPos, d = u - n, f = 0;
+    for (; d + 1 < r && u + 1 < h && this.equals(s[u + 1], t[d + 1], a); )
+      d++, u++, f++, a.oneChangePerToken && (e.lastComponent = { count: 1, previousComponent: e.lastComponent, added: !1, removed: !1 });
+    return f && !a.oneChangePerToken && (e.lastComponent = { count: f, previousComponent: e.lastComponent, added: !1, removed: !1 }), e.oldPos = u, d;
   }
   equals(e, t, s) {
     return s.comparator ? s.comparator(e, t) : e === t || !!s.ignoreCase && e.toLowerCase() === t.toLowerCase();
@@ -114,34 +114,34 @@ class se {
       n.push(e), a = e.previousComponent, delete e.previousComponent, e = a;
     n.reverse();
     const r = n.length;
-    let h = 0, l = 0, d = 0;
+    let h = 0, u = 0, d = 0;
     for (; h < r; h++) {
       const f = n[h];
       if (f.removed)
         f.value = this.join(s.slice(d, d + f.count)), d += f.count;
       else {
         if (!f.added && this.useLongestToken) {
-          let k = t.slice(l, l + f.count);
-          k = k.map(function($, v) {
-            const x = s[d + v];
+          let k = t.slice(u, u + f.count);
+          k = k.map(function($, g) {
+            const x = s[d + g];
             return x.length > $.length ? x : $;
           }), f.value = this.join(k);
         } else
-          f.value = this.join(t.slice(l, l + f.count));
-        l += f.count, f.added || (d += f.count);
+          f.value = this.join(t.slice(u, u + f.count));
+        u += f.count, f.added || (d += f.count);
       }
     }
     return n;
   }
 }
-function Q(i, e) {
+function ee(i, e) {
   let t;
   for (t = 0; t < i.length && t < e.length; t++)
     if (i[t] != e[t])
       return i.slice(0, t);
   return i.slice(0, t);
 }
-function K(i, e) {
+function te(i, e) {
   let t;
   if (!i || !e || i[i.length - 1] != e[e.length - 1])
     return "";
@@ -165,13 +165,13 @@ function j(i, e, t) {
 function S(i, e) {
   return U(i, e, "");
 }
-function E(i, e) {
+function D(i, e) {
   return j(i, e, "");
 }
-function ee(i, e) {
-  return e.slice(0, $e(i, e));
+function ie(i, e) {
+  return e.slice(0, ze(i, e));
 }
-function $e(i, e) {
+function ze(i, e) {
   let t = 0;
   i.length > e.length && (t = i.length - e.length);
   let s = e.length;
@@ -198,12 +198,12 @@ function A(i) {
     ;
   return i.substring(e + 1);
 }
-function w(i) {
+function y(i) {
   const e = i.match(/^\s*/);
   return e ? e[0] : "";
 }
-const te = "a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}", Pe = new RegExp(`[${te}]+|\\s+|[^${te}]`, "ug");
-class ze extends se {
+const se = "a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}", Se = new RegExp(`[${se}]+|\\s+|[^${se}]`, "ug");
+class Ae extends ne {
   equals(e, t, s) {
     return s.ignoreCase && (e = e.toLowerCase(), t = t.toLowerCase()), e.trim() === t.trim();
   }
@@ -215,11 +215,11 @@ class ze extends se {
         throw new Error('The segmenter passed must have a granularity of "word"');
       s = [];
       for (const h of Array.from(r.segment(e))) {
-        const l = h.segment;
-        s.length && /\s/.test(s[s.length - 1]) && /\s/.test(l) ? s[s.length - 1] += l : s.push(l);
+        const u = h.segment;
+        s.length && /\s/.test(s[s.length - 1]) && /\s/.test(u) ? s[s.length - 1] += u : s.push(u);
       }
     } else
-      s = e.match(Pe) || [];
+      s = e.match(Se) || [];
     const n = [];
     let a = null;
     return s.forEach((r) => {
@@ -234,48 +234,48 @@ class ze extends se {
       return e;
     let s = null, n = null, a = null;
     return e.forEach((r) => {
-      r.added ? n = r : r.removed ? a = r : ((n || a) && ie(s, a, n, r), s = r, n = null, a = null);
-    }), (n || a) && ie(s, a, n, null), e;
+      r.added ? n = r : r.removed ? a = r : ((n || a) && ae(s, a, n, r), s = r, n = null, a = null);
+    }), (n || a) && ae(s, a, n, null), e;
   }
 }
-const Se = new ze();
-function Ae(i, e, t) {
-  return Se.diff(i, e, t);
+const Ee = new Ae();
+function De(i, e, t) {
+  return Ee.diff(i, e, t);
 }
-function ie(i, e, t, s) {
+function ae(i, e, t, s) {
   if (e && t) {
-    const n = w(e.value), a = A(e.value), r = w(t.value), h = A(t.value);
+    const n = y(e.value), a = A(e.value), r = y(t.value), h = A(t.value);
     if (i) {
-      const l = Q(n, r);
-      i.value = j(i.value, r, l), e.value = S(e.value, l), t.value = S(t.value, l);
+      const u = ee(n, r);
+      i.value = j(i.value, r, u), e.value = S(e.value, u), t.value = S(t.value, u);
     }
     if (s) {
-      const l = K(a, h);
-      s.value = U(s.value, h, l), e.value = E(e.value, l), t.value = E(t.value, l);
+      const u = te(a, h);
+      s.value = U(s.value, h, u), e.value = D(e.value, u), t.value = D(t.value, u);
     }
   } else if (t) {
     if (i) {
-      const n = w(t.value);
+      const n = y(t.value);
       t.value = t.value.substring(n.length);
     }
     if (s) {
-      const n = w(s.value);
+      const n = y(s.value);
       s.value = s.value.substring(n.length);
     }
   } else if (i && s) {
-    const n = w(s.value), a = w(e.value), r = A(e.value), h = Q(n, a);
+    const n = y(s.value), a = y(e.value), r = A(e.value), h = ee(n, a);
     e.value = S(e.value, h);
-    const l = K(S(n, h), r);
-    e.value = E(e.value, l), s.value = U(s.value, n, l), i.value = j(i.value, n, n.slice(0, n.length - l.length));
+    const u = te(S(n, h), r);
+    e.value = D(e.value, u), s.value = U(s.value, n, u), i.value = j(i.value, n, n.slice(0, n.length - u.length));
   } else if (s) {
-    const n = w(s.value), a = A(e.value), r = ee(a, n);
-    e.value = E(e.value, r);
+    const n = y(s.value), a = A(e.value), r = ie(a, n);
+    e.value = D(e.value, r);
   } else if (i) {
-    const n = A(i.value), a = w(e.value), r = ee(n, a);
+    const n = A(i.value), a = y(e.value), r = ie(n, a);
     e.value = S(e.value, r);
   }
 }
-class Ee extends se {
+class Ie extends ne {
   constructor() {
     super(...arguments), this.tokenize = Te;
   }
@@ -287,9 +287,9 @@ class Ee extends se {
 `) && (t = t.slice(0, -1))), super.equals(e, t, s);
   }
 }
-const De = new Ee();
-function Ie(i, e, t) {
-  return De.diff(i, e, t);
+const We = new Ie();
+function Oe(i, e, t) {
+  return We.diff(i, e, t);
 }
 function Te(i, e) {
   e.stripTrailingCr && (i = i.replace(/\r\n/g, `
@@ -302,73 +302,73 @@ function Te(i, e) {
   }
   return t;
 }
-const ae = "/umbraco/umbracommunityurestore/api/v1", ne = "/umbraco/management/api/v1";
-async function T(i) {
+const re = "/umbraco/umbracommunityurestore/api/v1", le = "/umbraco/management/api/v1";
+async function O(i) {
   return {
     Authorization: `Bearer ${i}`,
     "Content-Type": "application/json"
   };
 }
-async function We(i, e, t, s = 0, n = 10) {
-  const a = new URL(`${ne}/document-version`, window.location.origin);
+async function Ve(i, e, t, s = 0, n = 10) {
+  const a = new URL(`${le}/document-version`, window.location.origin);
   a.searchParams.set("documentId", i), t && a.searchParams.set("culture", t), a.searchParams.set("skip", String(s)), a.searchParams.set("take", String(n));
-  const r = await fetch(a.toString(), { headers: await T(e) });
+  const r = await fetch(a.toString(), { headers: await O(e) });
   if (!r.ok) {
     const d = await r.text().catch(() => "");
     throw new Error(`Versions API returned ${r.status}: ${d}`);
   }
-  const h = await r.json(), l = (h.items ?? []).map((d) => ({
+  const h = await r.json(), u = (h.items ?? []).map((d) => ({
     versionId: d.id,
     createDate: d.versionDate,
     isCurrentDraft: d.isCurrentDraftVersion ?? !1,
     isCurrentPublished: d.isCurrentPublishedVersion ?? !1,
     preventCleanup: d.preventCleanup ?? !1
   }));
-  return { versions: l, total: h.total ?? l.length };
+  return { versions: u, total: h.total ?? u.length };
 }
-async function Oe(i, e, t, s) {
+async function Re(i, e, t, s) {
   const n = new URL(
-    `${ae}/content/${i}/version/${e}/properties`,
+    `${re}/content/${i}/version/${e}/properties`,
     window.location.origin
   );
   s && n.searchParams.set("culture", s);
-  const a = await fetch(n.toString(), { headers: await T(t) });
+  const a = await fetch(n.toString(), { headers: await O(t) });
   if (!a.ok) {
     const r = await a.text().catch(() => "");
     throw new Error(`Properties API returned ${a.status}: ${r}`);
   }
   return a.json();
 }
-async function Ve(i, e, t) {
-  const s = await fetch(`${ae}/content/${i}/restore`, {
+async function Le(i, e, t) {
+  const s = await fetch(`${re}/content/${i}/restore`, {
     method: "POST",
-    headers: await T(t),
+    headers: await O(t),
     body: JSON.stringify(e)
   });
   return s.ok ? { ok: !0 } : { ok: !1, error: await s.text().catch(() => "Unknown error") };
 }
-async function Re(i, e) {
-  const t = await fetch(`${ne}/document/${i}/publish`, {
+async function Ne(i, e) {
+  const t = await fetch(`${le}/document/${i}/publish`, {
     method: "PUT",
-    headers: await T(e),
+    headers: await O(e),
     body: JSON.stringify({ publishSchedules: [] })
   });
   return t.ok ? { ok: !0 } : { ok: !1, error: await t.text().catch(() => "Unknown error") };
 }
-var Le = Object.defineProperty, Ne = Object.getOwnPropertyDescriptor, re = (i) => {
+var Ue = Object.defineProperty, je = Object.getOwnPropertyDescriptor, oe = (i) => {
   throw TypeError(i);
-}, b = (i, e, t, s) => {
-  for (var n = s > 1 ? void 0 : s ? Ne(e, t) : e, a = i.length - 1, r; a >= 0; a--)
+}, w = (i, e, t, s) => {
+  for (var n = s > 1 ? void 0 : s ? je(e, t) : e, a = i.length - 1, r; a >= 0; a--)
     (r = i[a]) && (n = (s ? r(e, t, n) : r(n)) || n);
-  return s && n && Le(e, t, n), n;
-}, oe = (i, e, t) => e.has(i) || re("Cannot " + t), N = (i, e, t) => (oe(i, e, "read from private field"), t ? t.call(i) : e.get(i)), Ue = (i, e, t) => e.has(i) ? re("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(i) : e.set(i, t), u = (i, e, t) => (oe(i, e, "access private method"), t), o, D, le, W, y, ue, Z, G, ce, he, F, de, fe, M, O, I, J, B, pe, me, ve, ge;
-const q = 10;
-let m = class extends _e(be) {
+  return s && n && Ue(e, t, n), n;
+}, ue = (i, e, t) => e.has(i) || oe("Cannot " + t), N = (i, e, t) => (ue(i, e, "read from private field"), t ? t.call(i) : e.get(i)), Me = (i, e, t) => e.has(i) ? oe("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(i) : e.set(i, t), o = (i, e, t) => (ue(i, e, "access private method"), t), l, I, ce, T, b, he, G, H, de, M, X, F, fe, pe, B, E, me, W, J, q, ve, ge, be, we;
+const Z = 10;
+let m = class extends Ce(ye) {
   constructor() {
-    super(...arguments), Ue(this, o), this._view = { type: "loading" }, this._contentId = "", this._selectedAliases = /* @__PURE__ */ new Set(), this._isRestoring = !1, this._showConfirm = !1, this._totalVersions = 0, this._currentPage = 1, this._culture = "";
+    super(...arguments), Me(this, l), this._view = { type: "loading" }, this._contentId = "", this._selectedAliases = /* @__PURE__ */ new Set(), this._isRestoring = !1, this._showConfirm = !1, this._totalVersions = 0, this._currentPage = 1, this._culture = "";
   }
   connectedCallback() {
-    super.connectedCallback(), u(this, o, le).call(this);
+    super.connectedCallback(), o(this, l, ce).call(this);
   }
   // ─── Root render ───────────────────────────────────────────────────────────
   render() {
@@ -376,19 +376,28 @@ let m = class extends _e(be) {
       switch (this._view.type) {
         case "loading":
         case "comparing":
-          return g;
+          return v;
         case "versions":
-          return u(this, o, me).call(this, this._view.versions);
+          return o(this, l, ge).call(this, this._view.versions);
         case "detail":
-          return u(this, o, ve).call(this, this._view.version, this._view.properties);
+          return o(this, l, be).call(this, this._view.version, this._view.properties);
         case "error":
           return c`
-                        <div class="view-header"><h4 class="view-title">Property Restore</h4></div>
+                        <div class="detail-header">
+                            <uui-button look="primary" label="Back" @click=${o(this, l, G)}>
+                                <uui-icon name="icon-arrow-left"></uui-icon>
+                                Back
+                            </uui-button>
+                        </div>
                         <uui-box>
                             <div class="empty-state">
                                 <uui-icon name="icon-alert"></uui-icon>
-                                <p>${this._view.message}</p>
-                                <uui-button look="secondary" label="Try again" @click=${u(this, o, Z)}>Try again</uui-button>
+                                <p class="error-headline">Something went wrong</p>
+                                <p class="error-detail">${o(this, l, me).call(this, this._view.message)}</p>
+                                ${this._culture ? c`
+                                    <uui-button look="primary" label="Clear filter" @click=${o(this, l, X)}>
+                                        Clear filter
+                                    </uui-button>` : v}
                             </div>
                         </uui-box>
                     `;
@@ -396,29 +405,29 @@ let m = class extends _e(be) {
     })();
     return c`
             <umb-body-layout>
-                ${i ? c`<uui-loader-bar></uui-loader-bar>` : g}
+                ${i ? c`<uui-loader-bar></uui-loader-bar>` : v}
                 <div class="container">${e}</div>
-                ${this._showConfirm ? u(this, o, ge).call(this) : g}
+                ${this._showConfirm ? o(this, l, we).call(this) : v}
             </umb-body-layout>
         `;
   }
 };
-o = /* @__PURE__ */ new WeakSet();
-D = function() {
-  return this._culture === "" || u(this, o, G).call(this, this._culture) ? "" : "Enter a valid culture code (e.g. en-US, fr-FR) or leave blank for invariant.";
+l = /* @__PURE__ */ new WeakSet();
+I = function() {
+  return this._culture === "" || o(this, l, H).call(this, this._culture) ? "" : "Enter a valid culture code (e.g. en-US, fr-FR) or leave blank for invariant.";
 };
-le = function() {
-  this.consumeContext(Ce, (i) => {
+ce = function() {
+  this.consumeContext($e, (i) => {
     this._authContext = i;
-  }), this.consumeContext(ke, (i) => {
+  }), this.consumeContext(Pe, (i) => {
     this._notificationContext = i;
-  }), this.consumeContext(xe, (i) => {
+  }), this.consumeContext(ke, (i) => {
     i && (this._workspaceCtx = i, this.observe(i.unique, async (e) => {
-      e && e !== this._contentId && (this._contentId = e, await u(this, o, y).call(this, 1));
+      e && e !== this._contentId && (this._contentId = e, await o(this, l, b).call(this, 1));
     }));
   });
 };
-W = async function() {
+T = async function() {
   var e;
   const i = (e = this._authContext) == null ? void 0 : e.getOpenApiConfiguration();
   if (!(i != null && i.token)) return "";
@@ -428,25 +437,25 @@ W = async function() {
   }
   return i.token;
 };
-y = async function(i = this._currentPage) {
+b = async function(i = this._currentPage) {
   this._currentPage = i, this._view = { type: "loading" };
   try {
-    const e = await u(this, o, W).call(this), t = (i - 1) * q, { versions: s, total: n } = await We(
+    const e = await o(this, l, T).call(this), t = (i - 1) * Z, { versions: s, total: n } = await Ve(
       this._contentId,
       e,
       this._culture || void 0,
       t,
-      q
+      Z
     );
     this._totalVersions = n, this._view = { type: "versions", versions: s };
   } catch (e) {
     this._view = { type: "error", message: e instanceof Error ? e.message : "Failed to load version history." };
   }
 };
-ue = async function(i) {
+he = async function(i) {
   this._view = { type: "comparing" }, this._selectedAliases = /* @__PURE__ */ new Set();
   try {
-    const e = await u(this, o, W).call(this), t = await Oe(
+    const e = await o(this, l, T).call(this), t = await Re(
       this._contentId,
       i.versionId,
       e,
@@ -457,37 +466,40 @@ ue = async function(i) {
     this._view = { type: "error", message: e instanceof Error ? e.message : "Failed to load property comparison." };
   }
 };
-Z = function() {
-  u(this, o, y).call(this, this._currentPage);
+G = function() {
+  o(this, l, b).call(this, this._currentPage);
 };
-G = function(i) {
+H = function(i) {
   return i === "" || /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{2,8})*$/.test(i);
 };
-ce = function(i) {
-  this._culture = i, u(this, o, G).call(this, i) && u(this, o, y).call(this, 1);
+de = function(i) {
+  this._culture = i;
 };
-he = function() {
-  this._culture = "", u(this, o, y).call(this, 1);
+M = function() {
+  o(this, l, H).call(this, this._culture) && o(this, l, b).call(this, 1);
+};
+X = function() {
+  this._culture = "", o(this, l, b).call(this, 1);
 };
 F = function(i) {
   const e = new Set(this._selectedAliases);
   e.has(i) ? e.delete(i) : e.add(i), this._selectedAliases = e;
 };
-de = function(i) {
+fe = function(i) {
   if (this._view.type !== "detail") return;
   const e = i.target.checked;
   this._selectedAliases = e ? new Set(this._view.properties.map((t) => t.alias)) : /* @__PURE__ */ new Set();
 };
-fe = function() {
+pe = function() {
   this._view.type !== "detail" || this._selectedAliases.size === 0 || (this._showConfirm = !0);
 };
-M = async function(i) {
+B = async function(i) {
   var t, s, n, a;
   if (this._showConfirm = !1, this._view.type !== "detail") return;
   const { version: e } = this._view;
   this._isRestoring = !0;
   try {
-    const r = await u(this, o, W).call(this), h = await Ve(this._contentId, {
+    const r = await o(this, l, T).call(this), h = await Le(this._contentId, {
       versionId: e.versionId,
       propertyAliases: Array.from(this._selectedAliases),
       culture: this._culture || null
@@ -497,24 +509,34 @@ M = async function(i) {
       return;
     }
     if (i) {
-      const l = await Re(this._contentId, r);
-      (s = this._notificationContext) == null || s.peek(l.ok ? "positive" : "warning", {
-        data: l.ok ? { headline: "Restored and published", message: `${this._selectedAliases.size} ${this._selectedAliases.size === 1 ? "property" : "properties"} restored and published.` } : { headline: "Restored but not published", message: l.error ?? "Draft saved but could not be published." }
+      const u = await Ne(this._contentId, r);
+      (s = this._notificationContext) == null || s.peek(u.ok ? "positive" : "warning", {
+        data: u.ok ? { headline: "Restored and published", message: `${this._selectedAliases.size} ${this._selectedAliases.size === 1 ? "property" : "properties"} restored and published.` } : { headline: "Restored but not published", message: u.error ?? "Draft saved but could not be published." }
       });
     } else
       (n = this._notificationContext) == null || n.peek("positive", { data: { headline: "Properties restored", message: `${this._selectedAliases.size} ${this._selectedAliases.size === 1 ? "property" : "properties"} restored as a draft.` } });
     await Promise.all([
-      u(this, o, y).call(this, 1),
+      o(this, l, b).call(this, 1),
       (a = this._workspaceCtx) == null ? void 0 : a.load(this._contentId)
     ]);
   } finally {
     this._isRestoring = !1;
   }
 };
-O = function(i) {
+E = function(i) {
   return new Intl.DateTimeFormat(void 0, { dateStyle: "medium", timeStyle: "short" }).format(new Date(i));
 };
-I = function(i) {
+me = function(i) {
+  const e = i.match(/\{[\s\S]*\}/);
+  if (e)
+    try {
+      const t = JSON.parse(e[0]);
+      if (t.title) return t.title;
+    } catch {
+    }
+  return i;
+};
+W = function(i) {
   if (!i) return "";
   try {
     return JSON.stringify(JSON.parse(i), null, 2);
@@ -530,27 +552,33 @@ J = function(i) {
     return !1;
   }
 };
-B = function(i) {
-  return i ? c`<pre class="value-preview">${u(this, o, I).call(this, i)}</pre>` : c`<em class="value-empty">empty</em>`;
+q = function(i) {
+  return i ? c`<pre class="value-preview">${o(this, l, W).call(this, i)}</pre>` : c`<em class="value-empty">empty</em>`;
 };
-pe = function(i, e) {
+ve = function(i, e) {
   if (!i && !e) return c`<em class="value-empty">empty</em>`;
-  const t = u(this, o, I).call(this, i), s = u(this, o, I).call(this, e), n = u(this, o, J).call(this, i) || u(this, o, J).call(this, e) ? Ie(s, t) : Ae(s, t);
+  const t = o(this, l, W).call(this, i), s = o(this, l, W).call(this, e), n = o(this, l, J).call(this, i) || o(this, l, J).call(this, e) ? Oe(s, t) : De(s, t);
   return c`
             <pre class="value-preview diff-preview">${n.map(
     (a) => a.removed ? c`<span class="diff-removed">${a.value}</span>` : a.added ? c`<span class="diff-added">${a.value}</span>` : a.value
   )}</pre>
         `;
 };
-me = function(i) {
-  const e = Math.ceil(this._totalVersions / q);
+ge = function(i) {
+  const e = Math.ceil(this._totalVersions / Z);
   return i.length === 0 ? c`
+                <div class="detail-header">
+                    <uui-button look="primary" label="Back" @click=${() => o(this, l, b).call(this, 1)}>
+                        <uui-icon name="icon-arrow-left"></uui-icon>
+                        Back
+                    </uui-button>
+                </div>
                 <uui-box>
                     <div class="empty-state">
                         <uui-icon name="icon-history"></uui-icon>
                         ${this._culture ? c`
                                 <p>No saved versions found for culture <strong>${this._culture}</strong>.</p>
-                                <uui-button look="primary" label="Clear filter" @click=${u(this, o, he)}>
+                                <uui-button look="primary" label="Clear filter" @click=${o(this, l, X)}>
                                     Clear filter
                                 </uui-button>` : c`<p>No saved versions found for this content.</p>`}
                     </div>
@@ -561,31 +589,34 @@ me = function(i) {
                     <h4 class="view-title">Property Restore</h4>
                     <p class="hint">Select a version to compare its properties against the current draft, then choose which values to restore.</p>
                 </div>
-                <uui-button look="primary" label="Refresh" @click=${() => u(this, o, y).call(this, 1)}>
+                <uui-button look="primary" label="Refresh" @click=${() => o(this, l, b).call(this, 1)}>
                     <uui-icon name="icon-refresh"></uui-icon>
                     Refresh
                 </uui-button>
             </div>
 
-            <uui-box>
-                <div class="culture-section">
-                    <div class="culture-row">
-                        <uui-label for="culture-input">Culture</uui-label>
-                        <uui-input
-                            id="culture-input"
-                            placeholder="e.g. en-US (leave blank for invariant)"
-                            .value=${this._culture}
-                            ?error=${!!N(this, o, D)}
-                            @change=${(t) => u(this, o, ce).call(this, t.target.value)}>
-                        </uui-input>
-                    </div>
-                    ${N(this, o, D) ? c`<p class="culture-error">${N(this, o, D)}</p>` : c`<p class="hint">
-                            For multilingual sites, enter a culture code to compare property values for that specific language.
-                            Leave blank to compare invariant (non-language-specific) values.
-                            Versions are document-wide snapshots — this filter only affects which language's values are shown in the comparison.
-                        </p>`}
+            <div class="culture-section">
+                <uui-label for="culture-input">Culture</uui-label>
+                <div class="culture-input-row">
+                    <uui-input
+                        id="culture-input"
+                        placeholder="e.g. en-US (leave blank for invariant)"
+                        .value=${this._culture}
+                        ?error=${!!N(this, l, I)}
+                        @input=${(t) => o(this, l, de).call(this, t.target.value)}
+                        @keydown=${(t) => {
+    t.key === "Enter" && o(this, l, M).call(this);
+  }}>
+                    </uui-input>
+                    <uui-button look="primary" label="Search" @click=${o(this, l, M)}>Search</uui-button>
                 </div>
+                ${N(this, l, I) ? c`<p class="culture-error">${N(this, l, I)}</p>` : c`<p class="hint">
+                        For multilingual sites, enter a culture code to filter versions by language.
+                        Leave blank for invariant (non-language-specific) values.
+                    </p>`}
+            </div>
 
+            <uui-box>
                 <uui-table>
                     <uui-table-head>
                         <uui-table-head-cell>Version</uui-table-head-cell>
@@ -597,20 +628,20 @@ me = function(i) {
                         <uui-table-row>
                             <uui-table-cell class="cell-date">
                                 <uui-icon name="icon-history" class="row-icon"></uui-icon>
-                                ${u(this, o, O).call(this, t.createDate)}
+                                ${o(this, l, E).call(this, t.createDate)}
                             </uui-table-cell>
                             <uui-table-cell class="cell-status">
-                                ${t.isCurrentDraft ? c`<uui-tag color="warning" look="primary" size="s">Current draft</uui-tag>` : g}
-                                ${t.isCurrentPublished ? c`<uui-tag color="positive" look="primary" size="s">Published</uui-tag>` : g}
-                                ${!t.isCurrentDraft && !t.isCurrentPublished ? c`<uui-tag look="outline" size="s">Saved</uui-tag>` : g}
-                                ${t.preventCleanup ? c`<uui-tag look="outline" size="s">Pinned</uui-tag>` : g}
+                                ${t.isCurrentDraft ? c`<uui-tag color="warning" look="primary" size="s">Current draft</uui-tag>` : v}
+                                ${t.isCurrentPublished ? c`<uui-tag color="positive" look="primary" size="s">Published</uui-tag>` : v}
+                                ${!t.isCurrentDraft && !t.isCurrentPublished ? c`<uui-tag look="outline" size="s">Saved</uui-tag>` : v}
+                                ${t.preventCleanup ? c`<uui-tag look="outline" size="s">Pinned</uui-tag>` : v}
                             </uui-table-cell>
                             <uui-table-cell class="cell-action">
                                 <uui-button
                                     look="secondary"
                                     label="Compare with current draft"
                                     ?disabled=${t.isCurrentDraft}
-                                    @click=${() => u(this, o, ue).call(this, t)}>
+                                    @click=${() => o(this, l, he).call(this, t)}>
                                     Compare
                                 </uui-button>
                             </uui-table-cell>
@@ -624,17 +655,17 @@ me = function(i) {
                     <uui-pagination
                         .total=${e}
                         .current=${this._currentPage}
-                        @change=${(t) => u(this, o, y).call(this, t.target.current)}>
+                        @change=${(t) => o(this, l, b).call(this, t.target.current)}>
                     </uui-pagination>
                 </div>
-            ` : g}
+            ` : v}
         `;
 };
-ve = function(i, e) {
+be = function(i, e) {
   const t = this._selectedAliases.size, s = t === e.length, n = e.filter((a) => a.hasChanges).length;
   return c`
             <div class="detail-header">
-                <uui-button look="primary" label="Back" @click=${u(this, o, Z)}>
+                <uui-button look="primary" label="Back" @click=${o(this, l, G)}>
                     <uui-icon name="icon-arrow-left"></uui-icon>
                     Back
                 </uui-button>
@@ -642,7 +673,7 @@ ve = function(i, e) {
 
             <uui-box>
                 <div slot="headline">
-                    Property Restore &mdash; Version from ${u(this, o, O).call(this, i.createDate)}
+                    Property Restore &mdash; Version from ${o(this, l, E).call(this, i.createDate)}
                 </div>
 
                 <p class="hint comparison-hint">
@@ -664,13 +695,13 @@ ve = function(i, e) {
                                 label="Select all"
                                 .checked=${s}
                                 .indeterminate=${t > 0 && !s}
-                                @change=${u(this, o, de)}>
+                                @change=${o(this, l, fe)}>
                             </uui-checkbox>
                         </uui-table-head-cell>
                         <uui-table-head-cell class="col-property">Property</uui-table-head-cell>
                         <uui-table-head-cell class="col-status">Status</uui-table-head-cell>
                         <uui-table-head-cell>Current draft value</uui-table-head-cell>
-                        <uui-table-head-cell>Value in this version</uui-table-head-cell>
+                        <uui-table-head-cell>Value in this version (${o(this, l, E).call(this, i.createDate)})</uui-table-head-cell>
                     </uui-table-head>
 
                     ${e.map((a) => c`
@@ -678,13 +709,13 @@ ve = function(i, e) {
                             class="${a.hasChanges ? "row-changed" : ""}"
                             selectable
                             ?selected=${this._selectedAliases.has(a.alias)}
-                            @click=${() => u(this, o, F).call(this, a.alias)}>
+                            @click=${() => o(this, l, F).call(this, a.alias)}>
 
                             <uui-table-cell class="checkbox-cell" @click=${(r) => r.stopPropagation()}>
                                 <uui-checkbox
                                     label="Select ${a.label}"
                                     .checked=${this._selectedAliases.has(a.alias)}
-                                    @change=${() => u(this, o, F).call(this, a.alias)}>
+                                    @change=${() => o(this, l, F).call(this, a.alias)}>
                                 </uui-checkbox>
                             </uui-table-cell>
 
@@ -708,11 +739,11 @@ ve = function(i, e) {
                             </uui-table-cell>
 
                             <uui-table-cell class="cell-value">
-                                ${u(this, o, B).call(this, a.currentValue)}
+                                ${o(this, l, q).call(this, a.currentValue)}
                             </uui-table-cell>
 
                             <uui-table-cell class="cell-value">
-                                ${a.hasChanges ? u(this, o, pe).call(this, a.historicalValue, a.currentValue) : u(this, o, B).call(this, a.historicalValue)}
+                                ${a.hasChanges ? o(this, l, ve).call(this, a.historicalValue, a.currentValue) : o(this, l, q).call(this, a.historicalValue)}
                             </uui-table-cell>
                         </uui-table-row>
                     `)}
@@ -723,20 +754,18 @@ ve = function(i, e) {
                 <span class="selection-count">
                     ${t === 0 ? "No properties selected" : `${t} ${t === 1 ? "property" : "properties"} selected`}
                 </span>
-                <uui-button
-                    look="primary"
-                    color="positive"
-                    label="Restore selected"
-                    ?disabled=${t === 0 || this._isRestoring}
-                    @click=${u(this, o, fe)}>
-                    Restore${t > 0 ? ` ${t} selected` : ""}
-                    ${this._isRestoring ? c`<uui-loader-circle></uui-loader-circle>` : c`<uui-icon name="icon-check"></uui-icon>`}
-                </uui-button>
+                ${t > 0 && !this._isRestoring ? c`
+                    <uui-button
+                        look="primary"
+                        label="Restore selected"
+                        @click=${o(this, l, pe)}>
+                        Restore ${t} ${t === 1 ? "property" : "properties"}
+                    </uui-button>` : v}
             </div>
         `;
 };
-ge = function() {
-  if (this._view.type !== "detail") return g;
+we = function() {
+  if (this._view.type !== "detail") return v;
   const { version: i } = this._view, e = this._selectedAliases.size;
   return c`
             <div class="confirm-overlay" @click=${(t) => {
@@ -746,20 +775,20 @@ ge = function() {
                     <uui-dialog-layout headline="Confirm Property Restore">
                         <p>
                             You are about to restore <strong>${e} ${e === 1 ? "property" : "properties"}</strong>
-                            from the version saved on <strong>${u(this, o, O).call(this, i.createDate)}</strong>.
+                            from the version saved on <strong>${o(this, l, E).call(this, i.createDate)}</strong>.
                         </p>
                         <p>How would you like to save the restored values?</p>
                         <uui-button slot="actions" look="secondary" label="Cancel" @click=${() => {
     this._showConfirm = !1;
   }}>Cancel</uui-button>
-                        <uui-button slot="actions" look="outline" label="Save as draft" @click=${() => u(this, o, M).call(this, !1)}>Save as draft</uui-button>
-                        <uui-button slot="actions" look="primary" color="positive" label="Save and publish" @click=${() => u(this, o, M).call(this, !0)}>Save &amp; Publish</uui-button>
+                        <uui-button slot="actions" look="outline" label="Save as draft" @click=${() => o(this, l, B).call(this, !1)}>Save as draft</uui-button>
+                        <uui-button slot="actions" look="primary" color="positive" label="Save and publish" @click=${() => o(this, l, B).call(this, !0)}>Save &amp; Publish</uui-button>
                     </uui-dialog-layout>
                 </uui-dialog>
             </div>
         `;
 };
-m.styles = we`
+m.styles = _e`
         :host { display: block; }
 
         uui-loader-bar { position: sticky; top: 0; z-index: 10; }
@@ -797,21 +826,20 @@ m.styles = we`
             margin-bottom: var(--uui-size-space-4, 12px);
         }
 
-        /* ── Culture section (inside box header slot) ── */
+        /* ── Culture section ── */
         .culture-section {
             display: flex;
             flex-direction: column;
             gap: var(--uui-size-space-2, 6px);
-            padding: var(--uui-size-space-3, 9px) 0;
         }
 
-        .culture-row {
+        .culture-input-row {
             display: flex;
             align-items: center;
             gap: var(--uui-size-space-3, 9px);
         }
 
-        .culture-row uui-input { width: 260px; }
+        .culture-input-row uui-input { width: 260px; }
 
         .culture-error {
             margin: 0;
@@ -981,37 +1009,50 @@ m.styles = we`
         }
 
         .empty-state uui-icon { font-size: 2.5rem; opacity: 0.5; }
+
+        .error-headline {
+            margin: 0;
+            font-weight: 600;
+            color: var(--uui-color-text, #1b1b1b);
+        }
+
+        .error-detail {
+            margin: 0;
+            font-size: var(--uui-type-small-size, 0.875rem);
+            color: var(--uui-color-text-alt, #6b7280);
+            max-width: 480px;
+        }
     `;
-b([
+w([
   _()
 ], m.prototype, "_view", 2);
-b([
+w([
   _()
 ], m.prototype, "_contentId", 2);
-b([
+w([
   _()
 ], m.prototype, "_selectedAliases", 2);
-b([
+w([
   _()
 ], m.prototype, "_isRestoring", 2);
-b([
+w([
   _()
 ], m.prototype, "_showConfirm", 2);
-b([
+w([
   _()
 ], m.prototype, "_totalVersions", 2);
-b([
+w([
   _()
 ], m.prototype, "_currentPage", 2);
-b([
+w([
   _()
 ], m.prototype, "_culture", 2);
-m = b([
-  ye("umb-u-restore-workspace-view")
+m = w([
+  xe("umb-u-restore-workspace-view")
 ], m);
-const qe = m;
+const Ge = m;
 export {
   m as UmbURestoreWorkspaceViewElement,
-  qe as default
+  Ge as default
 };
-//# sourceMappingURL=workspace-view.element-CbjtiyYv.js.map
+//# sourceMappingURL=workspace-view.element-BzlAcIjA.js.map

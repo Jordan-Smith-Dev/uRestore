@@ -10,7 +10,7 @@ const e = [
     name: "uRestore Workspace View",
     alias: "Umbraco.Community.uRestore.WorkspaceView",
     type: "workspaceView",
-    js: () => import("./workspace-view.element-CbjtiyYv.js"),
+    js: () => import("./workspace-view.element-BzlAcIjA.js"),
     weight: 50,
     meta: {
       label: "Property Restore",

@@ -123,9 +123,12 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
         return value === "" || /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{2,8})*$/.test(value);
     }
 
-    #onCultureChange(value: string): void {
+    #onCultureInput(value: string): void {
         this._culture = value;
-        if (!this.#isValidCulture(value)) return;
+    }
+
+    #searchCulture(): void {
+        if (!this.#isValidCulture(this._culture)) return;
         this.#loadVersions(1);
     }
 
@@ -196,6 +199,18 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
         return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
     }
 
+    /** Extract a short, user-friendly message from a raw API error string. */
+    #parseErrorMessage(raw: string): string {
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+            try {
+                const parsed = JSON.parse(match[0]);
+                if (parsed.title) return parsed.title;
+            } catch { /* ignore */ }
+        }
+        return raw;
+    }
+
     /** Format a raw property value for display — pretty-prints JSON, leaves plain strings as-is. */
     #formatValue(raw: string | null): string {
         if (!raw) return "";
@@ -250,6 +265,12 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
 
         if (versions.length === 0) {
             return html`
+                <div class="detail-header">
+                    <uui-button look="primary" label="Back" @click=${() => this.#loadVersions(1)}>
+                        <uui-icon name="icon-arrow-left"></uui-icon>
+                        Back
+                    </uui-button>
+                </div>
                 <uui-box>
                     <div class="empty-state">
                         <uui-icon name="icon-history"></uui-icon>
@@ -277,27 +298,28 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
                 </uui-button>
             </div>
 
-            <uui-box>
-                <div class="culture-section">
-                    <div class="culture-row">
-                        <uui-label for="culture-input">Culture</uui-label>
-                        <uui-input
-                            id="culture-input"
-                            placeholder="e.g. en-US (leave blank for invariant)"
-                            .value=${this._culture}
-                            ?error=${!!this.#cultureError}
-                            @change=${(e: Event) => this.#onCultureChange((e.target as HTMLInputElement).value)}>
-                        </uui-input>
-                    </div>
-                    ${this.#cultureError
-                        ? html`<p class="culture-error">${this.#cultureError}</p>`
-                        : html`<p class="hint">
-                            For multilingual sites, enter a culture code to compare property values for that specific language.
-                            Leave blank to compare invariant (non-language-specific) values.
-                            Versions are document-wide snapshots — this filter only affects which language's values are shown in the comparison.
-                        </p>`}
+            <div class="culture-section">
+                <uui-label for="culture-input">Culture</uui-label>
+                <div class="culture-input-row">
+                    <uui-input
+                        id="culture-input"
+                        placeholder="e.g. en-US (leave blank for invariant)"
+                        .value=${this._culture}
+                        ?error=${!!this.#cultureError}
+                        @input=${(e: Event) => this.#onCultureInput((e.target as HTMLInputElement).value)}
+                        @keydown=${(e: KeyboardEvent) => { if (e.key === "Enter") this.#searchCulture(); }}>
+                    </uui-input>
+                    <uui-button look="primary" label="Search" @click=${this.#searchCulture}>Search</uui-button>
                 </div>
+                ${this.#cultureError
+                    ? html`<p class="culture-error">${this.#cultureError}</p>`
+                    : html`<p class="hint">
+                        For multilingual sites, enter a culture code to filter versions by language.
+                        Leave blank for invariant (non-language-specific) values.
+                    </p>`}
+            </div>
 
+            <uui-box>
                 <uui-table>
                     <uui-table-head>
                         <uui-table-head-cell>Version</uui-table-head-cell>
@@ -394,7 +416,7 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
                         <uui-table-head-cell class="col-property">Property</uui-table-head-cell>
                         <uui-table-head-cell class="col-status">Status</uui-table-head-cell>
                         <uui-table-head-cell>Current draft value</uui-table-head-cell>
-                        <uui-table-head-cell>Value in this version</uui-table-head-cell>
+                        <uui-table-head-cell>Value in this version (${this.#formatDate(version.createDate)})</uui-table-head-cell>
                     </uui-table-head>
 
                     ${properties.map((prop) => html`
@@ -453,17 +475,13 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
                         ? "No properties selected"
                         : `${selectedCount} ${selectedCount === 1 ? "property" : "properties"} selected`}
                 </span>
-                <uui-button
-                    look="primary"
-                    color="positive"
-                    label="Restore selected"
-                    ?disabled=${selectedCount === 0 || this._isRestoring}
-                    @click=${this.#openConfirm}>
-                    Restore${selectedCount > 0 ? ` ${selectedCount} selected` : ""}
-                    ${this._isRestoring
-                        ? html`<uui-loader-circle></uui-loader-circle>`
-                        : html`<uui-icon name="icon-check"></uui-icon>`}
-                </uui-button>
+                ${selectedCount > 0 && !this._isRestoring ? html`
+                    <uui-button
+                        look="primary"
+                        label="Restore selected"
+                        @click=${this.#openConfirm}>
+                        Restore ${selectedCount} ${selectedCount === 1 ? "property" : "properties"}
+                    </uui-button>` : nothing}
             </div>
         `;
     }
@@ -509,12 +527,21 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
                     return this.#renderDetail(this._view.version, this._view.properties);
                 case "error":
                     return html`
-                        <div class="view-header"><h4 class="view-title">Property Restore</h4></div>
+                        <div class="detail-header">
+                            <uui-button look="primary" label="Back" @click=${this.#backToVersionList}>
+                                <uui-icon name="icon-arrow-left"></uui-icon>
+                                Back
+                            </uui-button>
+                        </div>
                         <uui-box>
                             <div class="empty-state">
                                 <uui-icon name="icon-alert"></uui-icon>
-                                <p>${this._view.message}</p>
-                                <uui-button look="secondary" label="Try again" @click=${this.#backToVersionList}>Try again</uui-button>
+                                <p class="error-headline">Something went wrong</p>
+                                <p class="error-detail">${this.#parseErrorMessage(this._view.message)}</p>
+                                ${this._culture ? html`
+                                    <uui-button look="primary" label="Clear filter" @click=${this.#clearCultureFilter}>
+                                        Clear filter
+                                    </uui-button>` : nothing}
                             </div>
                         </uui-box>
                     `;
@@ -568,21 +595,20 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
             margin-bottom: var(--uui-size-space-4, 12px);
         }
 
-        /* ── Culture section (inside box header slot) ── */
+        /* ── Culture section ── */
         .culture-section {
             display: flex;
             flex-direction: column;
             gap: var(--uui-size-space-2, 6px);
-            padding: var(--uui-size-space-3, 9px) 0;
         }
 
-        .culture-row {
+        .culture-input-row {
             display: flex;
             align-items: center;
             gap: var(--uui-size-space-3, 9px);
         }
 
-        .culture-row uui-input { width: 260px; }
+        .culture-input-row uui-input { width: 260px; }
 
         .culture-error {
             margin: 0;
@@ -752,6 +778,19 @@ export class UmbURestoreWorkspaceViewElement extends UmbElementMixin(LitElement)
         }
 
         .empty-state uui-icon { font-size: 2.5rem; opacity: 0.5; }
+
+        .error-headline {
+            margin: 0;
+            font-weight: 600;
+            color: var(--uui-color-text, #1b1b1b);
+        }
+
+        .error-detail {
+            margin: 0;
+            font-size: var(--uui-type-small-size, 0.875rem);
+            color: var(--uui-color-text-alt, #6b7280);
+            max-width: 480px;
+        }
     `;
 }
 
